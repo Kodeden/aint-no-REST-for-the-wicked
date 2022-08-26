@@ -11,3 +11,5 @@ userRouter.post("/user", (req, res) => usersController.createUser(req, res));
 userRouter.put("/user/:id", (req, res) => usersController.updateUser(req, res));
 
 userRouter.delete("/user/:id", (req, res) => usersController.deleteUser(req, res));
+
+userRouter.get("/user/:id", (req, res) => usersController.getUser(req, res));

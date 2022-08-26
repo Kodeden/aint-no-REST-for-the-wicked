@@ -7,8 +7,7 @@ export class UsersService {
   }
 
   async getUsers() {
-    const result = await this.usersRepo.getUsers();
-    return result.rows;
+    return (await this.usersRepo.getUsers()).rows;
   }
 
   async createUser(reqBody) {
@@ -23,4 +22,31 @@ export class UsersService {
   async deleteUser(userId) {
     await this.usersRepo.deleteUser(userId);
   }
+
+  async getUser(userId) {
+    const userRows = (await this.usersRepo.getUser(userId)).rows;
+    const user = {};
+    userRows.forEach(row => {
+      if (!user.author) {
+        user.author = row.author;
+        user.comments = [row.comment]
+      } else {
+        user.comments.push(row.comment);
+      }
+    })
+    return user;
+  }
+
+  // REDUCE APPROACH
+  // async getUser(userId) {
+  //   const userRows = (await this.usersRepo.getUser(userId)).rows;
+  //   const squashedUserRows = userRows.reduce((prev, curr) => {
+  //     prev.comments = [...prev.comments, curr.comment_text];
+  //     return prev;
+  //   }, {
+  //     author: userRows[0].username,
+  //     comments: []
+  //   });
+  //   return squashedUserRows;
+  // }
 }

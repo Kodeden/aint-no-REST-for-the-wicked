@@ -13,3 +13,4 @@ app.get("/", (req, res) => {
 });
 
 app.use(userRouter);
+app.use(commentRouter);

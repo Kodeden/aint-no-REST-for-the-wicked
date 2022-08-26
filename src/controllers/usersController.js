@@ -48,4 +48,15 @@ export class UsersController {
       res.status(500).send("ERROR!!!!");
     }
   }
+
+  async getUser(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await this.usersService.getUser(id);
+      res.send(user);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("ERROR!!!!");
+    }
+  }
 }

@@ -23,4 +23,15 @@ export class UsersRepo {
   deleteUser(id) {
     return pool.query("DELETE FROM users WHERE id = $1", [id]);
   }
+
+  getUser(userId) {
+    return pool.query(
+      `
+        SELECT users.username as author, comments.comment_text as comment FROM users
+        JOIN comments ON users.id = comments.user_id
+        WHERE users.id = $1
+      `, 
+      [userId]
+    );
+  }
 }
